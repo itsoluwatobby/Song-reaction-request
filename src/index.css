@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.App{
+  font-family: 'Alegreya', serif;
+  background-image: url('https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bXVzaWN8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+::-webkit-scrollbar{
+  width: 1px;
+}
+
+.move{
+  animation: anime 5s infinite;
+}
+
+@keyframes anime{
+  0%{
+    transform: rotatex(-10deg);
+  }
+  18%{
+    transform: rotate(-5deg);
+  }
+  36%{
+    transform: rotate(0deg);
+  }
+  54%{
+    transform: rotate(5deg);
+  }
+  72%{
+    transform: rotate(10deg);
+  }
+  88%{
+    transform: rotate(5deg);
+  }
+  100%{
+    transform: rotate(-5deg);
+  }
+}
