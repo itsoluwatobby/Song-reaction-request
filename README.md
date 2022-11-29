@@ -1,5 +1,5 @@
 # SONG REACTION REQUEST WEBPAGE
-> ### A song reaction request website. This is a reaction request website where user users can make a request on the song they wish content creator to make a reactio to.
+> ### A song reaction request website. This is a reaction request website where users can make a request on the song they wish the content creator to make a reaction to.
 
 ---
 
