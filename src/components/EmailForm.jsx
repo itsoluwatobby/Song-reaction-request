@@ -1,18 +1,26 @@
-
+import { useEffect, useRef } from 'react'
 import { UseDataContext } from '../context/UseDataContext'
 
 export const EmailForm = () => {
-  const {email, setEmail, handleSubmit} = UseDataContext()
+  const {email, setEmail, handleSubmit, message} = UseDataContext()
+  const textRef = useRef()
+
+  useEffect(() => {
+    textRef.current.focus()
+  }, [])
 
   return (
     <div className='w-full flex gap-2 pb-2 flex-col'>
       <form onSubmit={handleSubmit} className='bg-slate-500 bg-opacity-60 rounded-full flex flex-col m-auto mt-8 border p-2 pb-4 gap-3 midscreen:w-[65%] w-[40%] items-center shadow-lg'>
-        <h1 className='rounded-full mt-2 text-lg text-center font-medium'>Email Required to Make A Request</h1>
+        <h1 className='rounded-full mt-2 text-[20px] text-center font-medium'>Gracie Fans Page</h1>
+        {message?.loading && <p className='text-green-700 text-lg'>Signing In...</p>}
+        {message?.error && <p className='text-red-700'>{message?.error}</p>}
         <div className='w-full flex flex-col'>
           <label htmlFor="email" className='font-semibold ml-2'>Email Address:</label>
           <input 
             type="email"
             id="email"
+            ref={textRef}
             value={email}
             required
             onChange={e => setEmail(e.target.value)} 

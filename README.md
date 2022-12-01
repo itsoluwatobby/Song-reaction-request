@@ -8,6 +8,8 @@
 * [x] Edit a song request
 * [x] Delete a song request
 * [x] Vote for a made request
+* [x] Search for a request
+* [x] Admin can delete and edit all requests
 
 ---
 

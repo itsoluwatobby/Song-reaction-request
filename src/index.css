@@ -12,6 +12,10 @@
   background-attachment: fixed;
 }
 
+.text_shadow{
+  text-shadow: 2px 4px 16px rgba(50,80,20,0.5);
+}
+
 ::-webkit-scrollbar{
   width: 1px;
 }
