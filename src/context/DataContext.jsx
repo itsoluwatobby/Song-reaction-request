@@ -17,21 +17,18 @@ export const DataContextProvider = ({children}) => {
   const [search, setSearch] = useState('')
   const [editPage, setEditPage] = useState(false);
   const [searchItem, setSearchItem] = useState(false);
-  const [edit, setEdit] = useState({
-    title: '', link: ''
-  })
   const [reload, setReload] = useState(1);
-  const [message, setMessage] = useState({
-    loading: false, error: ''
-  })
+  const [loading, setLoading] = useState(null)
+  const [error, setError] = useState(null)
+
   const navigate = useNavigate()
 
   const refetch = () => setReload(prev => prev + 1)
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    setMessage({loading: true})
-    setMessage({error: ''})
+    setLoading('Signing In...')
+    setError(null)
     try{
       const res = await axiosRequest.post('/new', {
         email
@@ -41,11 +38,10 @@ export const DataContextProvider = ({children}) => {
       localStorage.setItem('email', res?.data.email)
       setEmail('')
     }catch(error){
-    !error?.response && setMessage({error: 'No server response'})
-    error?.response?.status === 500 && setMessage({error: 'Internal server error'})
+    !error?.response && setError('No server response')
+    error?.response.status === 500 && setError('Internal server error')
     }finally{
-      setMessage({error: ''})
-      setMessage({loading: false})
+      setLoading(null)
     }
   }
 
@@ -54,12 +50,12 @@ export const DataContextProvider = ({children}) => {
     setEditTitle(targetRequest.requestTitle)
     setEditLink(targetRequest.requestLink)
     setRequestId(targetRequest._id)
-    setMessage({loading: true})
-    setMessage({error: ''})
   }
 
   const submitEdit = async(e) => {
     e.preventDefault()
+    setLoading('Submiting update...')
+    setError(null)
     try{
       const res = await axiosRequest.put(`/edit/${user?._id}`, {
         id: requestId,
@@ -72,17 +68,16 @@ export const DataContextProvider = ({children}) => {
       setEditTitle('')
       setEditLink('')
     }catch(error){
-    !error?.response && setMessage({error: 'No server response'})
-    error?.response?.status === 403 && setMessage({error: 'Resourse not found'})
-    error?.response?.status === 500 && setMessage({error: 'Internal server error'})
+    !error?.response && setError('No server response')
+    error?.response?.status === 403 && setError('Resourse not found')
+    error?.response?.status === 500 && setError('Internal server error')
     }finally{
-      setMessage({error: ''})
-      setMessage({loading: false})
+      setLoading(null)
     }
   }
 
   const value = {
-    user, setUser, email, setEmail, handleEdit, handleSubmit, message, setMessage, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, setEdit, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch
+    user, setUser, email, setEmail, handleEdit, handleSubmit, setLoading, setError, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch, loading, error
   }
 
   return (

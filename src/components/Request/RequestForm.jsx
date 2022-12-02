@@ -1,10 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {BsFillShareFill, BsSearch} from 'react-icons/bs'
 import { axiosRequest } from '../../app/axios'
 import { UseDataContext } from '../../context/UseDataContext'
 
 export const RequestForm = () => {
-  const {user, message, setMessage, requestTitle, requestLink, setRequestTitle, setRequestLink,  request, setSearchItem, setRequest, setNewRequest} = UseDataContext()
+  const {user, requestTitle, requestLink, setRequestTitle, setRequestLink,  request, setSearchItem, setRequest, setNewRequest} = UseDataContext()
+  const [loading, setLoading] = useState(null)
+  const [error, setError] = useState(null)
   const inputRef = useRef()
 
   useEffect(() => {
@@ -13,7 +15,8 @@ export const RequestForm = () => {
   
   const handleSubmit = async(e) => {
     e.preventDefault()
-    setMessage({loading: 'Submitting request...'})
+    setLoading('Submitting request...')
+    setError(null)
     try{
       const songRequest = {email: user?.email, requestTitle, requestLink}
       const res = await axiosRequest.post(`/newRequest/${user._id}`, songRequest)
@@ -22,10 +25,11 @@ export const RequestForm = () => {
       setRequestTitle('')
       setRequestLink('')
     }catch(error){
-      !error?.response && setMessage({error: 'No server response'})
-      error?.response?.status === 500 && setMessage({error: 'Internal server error'})
+      !error?.response && setError('No server response')
+      error?.response?.status === 409 && setError('Request already made by a user')
+      error?.response?.status === 500 && setError('Internal server error')
     }finally{
-      setMessage({loading: null})
+      setLoading(null)
     }
   }
   
@@ -33,8 +37,8 @@ export const RequestForm = () => {
     <div className='flex-none maxscreen:w-[35%] flex flex-col gap-3 h-full shadow-lg relative'>
       <form onSubmit={handleSubmit} className='flex-none flex flex-col gap-1 p-2 border rounded-lg bg-opacity-30 bg-blue-200'>
       <h1 className='text-center text-2xl font-semibold'>Make A Request</h1>
-      {message?.loading && <span className='text-red-700'>{message?.loading}</span>
-           || message?.error && <span className='text-red-700'>{message?.error}</span>}
+      {loading && <div className='text-gray-50 capitalize text-lg tracking-wider'>{loading}</div>}
+      {error && <div className='text-gray-200 m-auto bg-red-600 rounded-full pl-2 pr-2 w-fit capitalize text-lg tracking-wider'>{error}</div>}
         <div
           title='Search Requests'
           onClick={() => setSearchItem(prev => !prev)}

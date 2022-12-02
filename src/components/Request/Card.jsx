@@ -8,23 +8,23 @@ import { axiosRequest } from '../../app/axios'
 import { format } from 'timeago.js'
 
 export const Card = () => {
-  const {request, reload, setEditPage, refetch, handleEdit, user, message, setMessage, newRequest, setRequest, search} = UseDataContext()
+  const {request, reload, setEditPage, refetch, handleEdit, user, setLoading, setError, loading, error, newRequest, setRequest, search} = UseDataContext()
 
   useEffect(() => {
     let isMounted = true
 
     const fetchRequests = async() => {
-      setMessage({loading: 'Loading requests...'})
-      setMessage({error: null})
+      setLoading('Loading requests...')
+      setError(null)
       try{
         const res = await axiosRequest.get('/')
         isMounted && setRequest(res?.data)
       }catch(error){
-        !error?.response && setMessage({error: 'No server response'})
-        error?.response?.status === 400 && setMessage({error: 'No response available'})
-        error?.response?.status === 500 && setMessage({error: 'Internal server error'})
+        !error?.response && setError('No server response')
+        error?.response?.status === 400 && setError('No response available')
+        error?.response?.status === 500 && setError('Internal server error')
       }finally{
-        setMessage({loading: null})
+        setLoading(null)
       }
     } 
     fetchRequests()
@@ -34,15 +34,19 @@ export const Card = () => {
   }, [newRequest, user, reload])
 
   const handleDelete = async(id) => {
+    setLoading('Deleting request...')
+      setError(null)
     try{
       const res = await axiosRequest.delete(`/delete/${user._id}/${id}`)
       refetch()
     }catch(error){
-      !error?.response && setMessage({error: 'No server response'})
-      error?.response?.status === 400 && setMessage({error: 'requestId required'})
-      error?.response?.status === 403 && setMessage({error: 'resource not found'})
-      error?.response?.status === 401 && setMessage({error: 'unauthorized'})
-      error?.response?.status === 500 && setMessage({error: 'Internal server error'})
+      !error?.response && setError('No server response')
+      error?.response?.status === 400 && setError('requestId required')
+      error?.response?.status === 403 && setError('resource not found')
+      error?.response?.status === 401 && setError('unauthorized')
+      error?.response?.status === 500 && setError('Internal server error')
+    }finally{
+      setLoading(null)
     }
   }
 
@@ -51,10 +55,10 @@ export const Card = () => {
       const res = await axiosRequest.put(`/vote/${user._id}/${id}`)
       refetch()
     }catch(error){
-      !error?.response && setMessage({error: 'No server response'})
-      error?.response?.status === 400 && setMessage({error: 'id required'})
-      error?.response?.status === 403 && setMessage({error: 'resource not found'})
-      error?.response?.status === 500 && setMessage({error: 'Internal server error'})
+      !error?.response && setError('No server response')
+      error?.response?.status === 400 && setError('id required')
+      error?.response?.status === 403 && setError('resource not found')
+      error?.response?.status === 500 && setError('Internal server error')
     }
   }
 
@@ -64,9 +68,9 @@ export const Card = () => {
 
   return (
     <article className='bg-slate-900 font-serif bg-opacity-80 text-white tracking-wide flex-auto w-full border p-2 rounded-lg overflow-y-scroll max-h-[75vh]'>
-      {message?.loading && <div className='text-white uppercase text-lg tracking-wider'>{message?.loading}</div>}
-      {message?.error && <div className='text-white uppercase text-lg tracking-wider'>{message?.error}</div>}
-      {request.length ? (
+      {loading && <div className='text-gtray-200 uppercase text-lg tracking-wider'>{loading}</div>}
+      {error && <div className='text-red-500 uppercase text-lg tracking-wider'>{error}</div>}
+      {
         filteredSearch?.map(request => (
           <div key={request._id} className='relative border-b-[2px] shadow-lg p-2'>
             <p className='flex items-center gap-8'>
@@ -122,11 +126,12 @@ export const Card = () => {
             </div>
           </div>
         ))
-      ) : (
-        <div className='text-white uppercase text-lg tracking-wider'>
-            no request to display
-        </div>
-      )}
+      // ) : (
+      //   <div className='text-white uppercase text-lg tracking-wider'>
+      //       no request to display
+      //   </div>
+      // )
+      }
     </article>
   )
 }

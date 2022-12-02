@@ -1,11 +1,18 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { FaTimesCircle } from 'react-icons/fa'
 import { UseDataContext } from '../../context/UseDataContext'
 
 export const Edit = () => {
-  const {setEdit, editTitle, setEditPage, editLink, setEditTitle, setEditLink, submitEdit} = UseDataContext()
+  const {editTitle, setEditPage, editLink, setEditTitle, setEditLink, submitEdit} = UseDataContext()
   const textRef = useRef()
+  const [loading, setLoading] = useState(null)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    setError(null)
+    setLoading(null)
+  }, [])
 
   useEffect(() => {
     textRef.current.focus()
@@ -18,6 +25,8 @@ export const Edit = () => {
           <FaTimesCircle 
             onClick={() => setEditPage(false)}
             className='absolute cursor-pointer text-2xl hover:text-gray-700 right-2'/>
+          {loading && <p className='text-gray-50 capitalize text-lg'>{loading}</p>}
+          {!loading && error && <p className='text-gray-200 m-auto bg-red-600 rounded-full pl-2 pr-2 w-fit capitalize text-lg tracking-wider'>{error}</p>}
           <div className='flex flex-col'>
             <label htmlFor="title" className='font-semibold text-lg'>Edit Title*:</label>
             <input 
