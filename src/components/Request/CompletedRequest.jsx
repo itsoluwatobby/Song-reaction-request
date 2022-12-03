@@ -2,11 +2,16 @@ import {ImArrowDown, ImArrowUp} from 'react-icons/im'
 import {FaTrashAlt} from 'react-icons/fa'
 import {BsFillPenFill} from 'react-icons/bs'
 import { format } from 'timeago.js'
+import { UseDataContext } from '../../context/UseDataContext'
 
 export const CompletedRequest = (
   {request, handleDelete, handleCompleted, user, setEditPage, handleEdit}) => {
+    const {setError} = UseDataContext()
+
   return (
-    <div className='relative border-b-[2px] shadow-lg p-2'>
+    <li
+      onClick={() => setError(null)}
+    className='relative border-b-[2px] shadow-lg p-2 last:border-b-0'>
       <p className='flex items-center gap-8'>
         <span>
           {request?.email}
@@ -30,7 +35,7 @@ export const CompletedRequest = (
         <span>Link:</span>
         <a href={request?.requestLink} target="_blank" className='text-green-500 underline hover:text-green-400'>{request?.requestLink}</a>
       </p>}
-      <p className='cursor-pointer w-32 mt-2'>
+      <p className='cursor-pointer w-40 mt-2'>
         {
           user?.admin &&
             <div className='flex items-center gap-3'>  
@@ -63,6 +68,6 @@ export const CompletedRequest = (
           </div>
         }
       </div>
-    </div>
+    </li>
   )
 }

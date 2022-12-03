@@ -60,7 +60,11 @@ export const Card = () => {
     setLoading('Deleting request...')
       setError(null)
     try{
+      const otherRequests = request.filter(target => target._id !== id)
+      const others = completedRequest.filter(target => target._id !== id)
       const res = await axiosRequest.delete(`/delete/${user._id}/${id}`)
+      setRequest(otherRequests)
+      setCompletedRequest(others)
       refetch()
     }catch(error){
       !error?.response && setError('No server response')
@@ -79,6 +83,7 @@ export const Card = () => {
       refetch()
     }catch(error){
       !error?.response && setError('No server response')
+      error?.response?.status === 401 && setError('unauthorized')
       error?.response?.status === 400 && setError('id required')
       error?.response?.status === 403 && setError('resource not found')
       error?.response?.status === 500 && setError('Internal server error')
@@ -92,6 +97,7 @@ export const Card = () => {
     }catch(error){
       !error?.response && setError('No server response')
       error?.response?.status === 400 && setError('No response available')
+      error?.response?.status === 401 && setError('unauthorized')
       error?.response?.status === 500 && setError('Internal server error')
     }
   }
@@ -105,7 +111,7 @@ export const Card = () => {
   const filteredSearch2 =  sortedRequest2.filter(sorted => sorted?.requestTitle.toLowerCase().includes(search.toLowerCase()))
 
   return (
-    <article className='bg-slate-900 font-serif bg-opacity-80 text-white tracking-wide flex-auto w-full border p-2 rounded-lg overflow-y-scroll max-h-[75vh]'>
+    <ul className='bg-slate-900 font-serif bg-opacity-80 text-white tracking-wide flex-auto w-full border p-2 rounded-lg overflow-y-scroll max-h-[75vh]'>
       {(loading || (loading2 && completed)) && <div className='text-gtray-200 uppercase text-lg tracking-wider'>{(loading2 && completed) || loading}</div>}
       {(error || (error2 && completed)) && <div className='text-red-500 uppercase text-lg tracking-wider'>{(completed && error2) || error}</div>}
       {!completed ? 
@@ -135,6 +141,6 @@ export const Card = () => {
           />
         ))
       }
-    </article>
+    </ul>
   )
 }

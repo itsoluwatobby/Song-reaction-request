@@ -2,11 +2,16 @@ import {ImArrowDown, ImArrowUp} from 'react-icons/im'
 import {FaTrashAlt} from 'react-icons/fa'
 import {BsFillPenFill} from 'react-icons/bs'
 import { format } from 'timeago.js'
+import { UseDataContext } from '../../context/UseDataContext'
 
 export const UncompletedRequest = (
   {request, handleDelete, handleCompleted, user, setEditPage, handleVotes, handleEdit}) => {
+    const {setError} = UseDataContext()
+
   return (
-    <div className='relative border-b-[2px] shadow-lg p-2'>
+    <li 
+    onClick={() => setError(null)}
+      className='relative border-b-[2px] shadow-lg p-2 last:border-b-0'>
       <p className='flex items-center gap-8'>
         <span>
           {request?.email}
@@ -73,6 +78,6 @@ export const UncompletedRequest = (
           </div>
         }
       </div>
-    </div>
+    </li>
   )
 }

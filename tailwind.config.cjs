@@ -7,7 +7,8 @@ module.exports = {
     extend: {},
     screens: {
       midscreen: {'max': '908px'},
-      minscreen: {'max': '470px'},
+      mildscreen: {'max': '768px'},
+      minscreen: {'max': '508px'},
       maxscreen: {'min': '768px'}
     }
   },

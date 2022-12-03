@@ -4,14 +4,12 @@ import { FaTimesCircle } from 'react-icons/fa'
 import { UseDataContext } from '../../context/UseDataContext'
 
 export const Edit = () => {
-  const {editTitle, setEditPage, editLink, setEditTitle, setEditLink, submitEdit} = UseDataContext()
+  const {editTitle, setEditPage, editLink, setEditTitle, setEditLink, submitEdit, loading1, setLoading1, error1, setError1} = UseDataContext()
   const textRef = useRef()
-  const [loading, setLoading] = useState(null)
-  const [error, setError] = useState(null)
-
+  
   useEffect(() => {
-    setError(null)
-    setLoading(null)
+    setError1(null)
+    setLoading1(null)
   }, [])
 
   useEffect(() => {
@@ -19,14 +17,16 @@ export const Edit = () => {
   }, [])
 
   return (
-    <article className='flex-none maxscreen:w-[35%] flex flex-col gap-3 h-full shadow-lg '>
+    <article 
+      onClick={() => setError1(null)}
+      className='flex-none maxscreen:w-[35%] flex flex-col gap-3 h-full shadow-lg '>
     <form onSubmit={submitEdit} className='relative flex-none flex flex-col gap-2 p-2 border rounded-lg bg-opacity-30 bg-blue-200'>
           <h1 className='text-center text-2xl font-semibold'>Edit Your Request</h1>
           <FaTimesCircle 
             onClick={() => setEditPage(false)}
             className='absolute cursor-pointer text-2xl hover:text-gray-700 right-2'/>
-          {loading && <p className='text-gray-50 capitalize text-lg'>{loading}</p>}
-          {!loading && error && <p className='text-gray-200 m-auto bg-red-600 rounded-full pl-2 pr-2 w-fit capitalize text-lg tracking-wider'>{error}</p>}
+          {loading1 && <p className='text-gray-50 capitalize text-lg'>{loading1}</p>}
+          {!loading1 && error1 && <p className='text-gray-200 m-auto bg-red-600 rounded-full pl-2 pr-2 w-fit capitalize text-lg tracking-wider'>{error1}</p>}
           <div className='flex flex-col'>
             <label htmlFor="title" className='font-semibold text-lg'>Edit Title*:</label>
             <input 

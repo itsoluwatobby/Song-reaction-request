@@ -5,7 +5,7 @@ import { axiosRequest } from '../app/axios'
 export const DataContext = createContext({})
 
 export const DataContextProvider = ({children}) => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('userRequest')) || {})
   const [email, setEmail] = useState('')
   const [request, setRequest] = useState([])
   const [completedRequest, setCompletedRequest] = useState([])
@@ -22,6 +22,8 @@ export const DataContextProvider = ({children}) => {
   const [reload, setReload] = useState(1);
   const [loading, setLoading] = useState(null)
   const [error, setError] = useState(null)
+  const [loading1, setLoading1] = useState(null)
+  const [error1, setError1] = useState(null)
 
   const navigate = useNavigate()
 
@@ -37,7 +39,7 @@ export const DataContextProvider = ({children}) => {
       })
       setUser(res?.data)
       navigate('/song/request')
-      localStorage.setItem('email', res?.data.email)
+      localStorage.setItem('userRequest', JSON.stringify(res?.data))
       setEmail('')
     }catch(error){
     !error?.response && setError('No server response')
@@ -49,7 +51,7 @@ export const DataContextProvider = ({children}) => {
 
   const logout = () => {
     setUser({})
-    localStorage.removeItem('email')
+    localStorage.removeItem('userRequest')
   }
 
   const handleEdit = async(id) => {
@@ -61,8 +63,8 @@ export const DataContextProvider = ({children}) => {
 
   const submitEdit = async(e) => {
     e.preventDefault()
-    setLoading('Submiting update...')
-    setError(null)
+    setLoading1('Submiting update...')
+    setError1(null)
     try{
       const res = await axiosRequest.put(`/edit/${user?._id}`, {
         id: requestId,
@@ -75,16 +77,17 @@ export const DataContextProvider = ({children}) => {
       setEditTitle('')
       setEditLink('')
     }catch(error){
-    !error?.response && setError('No server response')
-    error?.response?.status === 403 && setError('Resourse not found')
-    error?.response?.status === 500 && setError('Internal server error')
+    !error?.response && setError1('No server response')
+    error?.response?.status === 401 && setError1('unauthorized')
+    error?.response?.status === 403 && setError1('Resourse not found')
+    error?.response?.status === 500 && setError1('Internal server error')
     }finally{
-      setLoading(null)
+      setLoading1(null)
     }
   }
 
   const value = {
-    user, setUser, email, setEmail, handleEdit, handleSubmit, setLoading, setError, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch, loading, error, logout, completed, setCompleted, completedRequest, setCompletedRequest
+    user, setUser, email, setEmail, handleEdit, handleSubmit, setLoading, setError, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch, loading, error, logout, completed, setCompleted, completedRequest, setCompletedRequest, setLoading1, setError1, loading1, error1 
   }
 
   return (

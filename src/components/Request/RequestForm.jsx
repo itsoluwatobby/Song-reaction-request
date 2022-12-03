@@ -34,7 +34,7 @@ export const RequestForm = () => {
   }
   
   return (
-    <div className='flex-none maxscreen:w-[35%] flex flex-col gap-3 h-full shadow-lg relative'>
+    <div className='flex-none maxscreen:w-[35%] midscreen:w-full flex flex-col gap-3 h-full shadow-lg relative'>
       <form onSubmit={handleSubmit} className='flex-none flex flex-col gap-1 p-2 border rounded-lg bg-opacity-30 bg-blue-200'>
       <h1 className='text-center text-2xl font-semibold'>Make A Request</h1>
       {loading && <div className='text-gray-50 capitalize text-lg tracking-wider'>{loading}</div>}
@@ -72,15 +72,15 @@ export const RequestForm = () => {
           />
         </div>
         <div className='flex justify-between'>
-          <button type='submit' title='Submit Request' className='flex-none w-28 grid place-content-center p-2 rounded-full shadow-lg bg-blue-400 hover:bg-blue-500 active:bg-blue-400'>
+          <button type='submit' title='Submit Request' className='focus:outline-none flex-none w-28 grid place-content-center p-2 rounded-full shadow-lg bg-blue-400 hover:bg-blue-500 active:bg-blue-400'>
             <BsFillShareFill className='text-2xl text-white'/>
           </button>
           <button 
             type='button' 
             title='View Completed Requests' 
             onClick={() => setCompleted(prev => !prev)}
-            className='pl-3 pr-3 font-semibold capitalize flex-none grid max-w-32 place-content-center p-2 rounded-full shadow-lg bg-teal-400 hover:bg-teal-500 active:bg-teal-400'>
-            {completed ? 'Close' : 'View Completed requests'}
+            className='focus:outline-none pl-3 pr-3 font-semibold capitalize flex-none grid place-content-center p-2 rounded-full shadow-lg bg-teal-400 hover:bg-teal-500 active:bg-teal-400'>
+            {completed ? 'Close' : 'View Completed'}
           </button>
         </div>
       </form>
