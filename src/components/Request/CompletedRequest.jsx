@@ -4,9 +4,9 @@ import {BsFillPenFill} from 'react-icons/bs'
 import { format } from 'timeago.js'
 
 export const CompletedRequest = (
-  {request, handleDelete, handleCompleted, user, setEditPage, handleVotes, handleEdit}) => {
+  {request, handleDelete, handleCompleted, user, setEditPage, handleEdit}) => {
   return (
-    <div key={request._id} className='relative border-b-[2px] shadow-lg p-2'>
+    <div className='relative border-b-[2px] shadow-lg p-2'>
       <p className='flex items-center gap-8'>
         <span>
           {request?.email}
@@ -40,7 +40,7 @@ export const CompletedRequest = (
                 onChange={() => handleCompleted(request?._id)}
                 className='w-4 h-4 cursor-pointer'
               />
-              <span className={`text-[20px] ${request?.completed ? 'text-black' : 'not text-white'}`}>{request?.completed ? 'completed' : 'not completed'}</span>
+              <span className={`text-[20px] ${request?.completed ? 'text-gray-400' : 'text-gray-400'}`}>{request?.completed ? 'completed' : 'not completed'}</span>
             </div>
         }
       </p>

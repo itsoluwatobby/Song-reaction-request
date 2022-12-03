@@ -15,7 +15,9 @@ export const EmailForm = () => {
   }, [])
 
   return (
-    <div className='w-full flex gap-2 pb-2 flex-col'>
+    <div 
+      onClick={() => setError('')}
+      className='w-full flex gap-2 pb-2 flex-col'>
       <form onSubmit={handleSubmit} className='bg-slate-500 bg-opacity-60 rounded-full flex flex-col m-auto mt-8 border p-2 pb-4 midscreen:w-[65%] w-[40%] items-center shadow-lg'>
         <h1 className='rounded-full mt-2 text-[20px] text-center font-medium'>Gracie Fans Page</h1>
         {loading && <p className='text-gray-50 text-lg capitalize'>{loading}</p>}

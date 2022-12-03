@@ -6,7 +6,7 @@ import { format } from 'timeago.js'
 export const UncompletedRequest = (
   {request, handleDelete, handleCompleted, user, setEditPage, handleVotes, handleEdit}) => {
   return (
-    <div key={request._id} className='relative border-b-[2px] shadow-lg p-2'>
+    <div className='relative border-b-[2px] shadow-lg p-2'>
       <p className='flex items-center gap-8'>
         <span>
           {request?.email}
@@ -50,7 +50,7 @@ export const UncompletedRequest = (
                 className='w-4 h-4 cursor-pointer'
               />
             }
-            <span className={`text-[20px] ${request?.completed ? 'text-black' : 'not text-white'}`}>{request?.completed ? 'completed' : 'not completed'}</span>
+            <span className={`text-[20px] ${request?.completed ? 'text-gray-400' : 'not text-gray-100'}`}>{request?.completed ? 'completed' : 'not completed'}</span>
           </div>
         }
       </p>

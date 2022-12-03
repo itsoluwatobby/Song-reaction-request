@@ -79,8 +79,8 @@ export const RequestForm = () => {
             type='button' 
             title='View Completed Requests' 
             onClick={() => setCompleted(prev => !prev)}
-            className='flex-none grid max-w-32 place-content-center p-2 rounded-full shadow-lg bg-teal-400 hover:bg-teal-500 active:bg-teal-400'>
-            {completed ? 'Close' : 'View Completed'}
+            className='pl-3 pr-3 font-semibold capitalize flex-none grid max-w-32 place-content-center p-2 rounded-full shadow-lg bg-teal-400 hover:bg-teal-500 active:bg-teal-400'>
+            {completed ? 'Close' : 'View Completed requests'}
           </button>
         </div>
       </form>

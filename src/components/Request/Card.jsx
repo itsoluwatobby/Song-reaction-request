@@ -3,9 +3,12 @@ import { useEffect } from 'react'
 import { axiosRequest } from '../../app/axios'
 import { UncompletedRequest } from './UncompletedRequest'
 import { CompletedRequest } from './CompletedRequest'
+import { useState } from 'react'
 
 export const Card = () => {
   const {request, completed, reload, setEditPage, refetch, handleEdit, user, setLoading, setError, loading, error, newRequest, setRequest, search, completedRequest, setCompletedRequest} = UseDataContext()
+  const [loading2, setLoading2] = useState('')
+  const [error2, setError2] = useState('')
 
   useEffect(() => {
     let isMounted = true
@@ -34,17 +37,17 @@ export const Card = () => {
     let isMounted = true
 
     const fetchCompletedRequests = async() => {
-      setLoading('Loading requests...')
-      setError(null)
+      setLoading2('Loading completed requests...')
+      setError2(null)
       try{
         const completedRes = await axiosRequest.get('/complete')
         isMounted && setCompletedRequest(completedRes?.data)
       }catch(error){
-        !error?.response && setError('No server response')
-        error?.response?.status === 400 && setError('No available requests')
-        error?.response?.status === 500 && setError('Internal server error')
+        !error?.response && setError2('No server response')
+        error?.response?.status === 400 && setError2('No completed requests')
+        error?.response?.status === 500 && setError2('Internal server error')
       }finally{
-        setLoading(null)
+        setLoading2(null)
       }
     } 
     fetchCompletedRequests()
@@ -103,11 +106,11 @@ export const Card = () => {
 
   return (
     <article className='bg-slate-900 font-serif bg-opacity-80 text-white tracking-wide flex-auto w-full border p-2 rounded-lg overflow-y-scroll max-h-[75vh]'>
-      {loading && <div className='text-gtray-200 uppercase text-lg tracking-wider'>{loading}</div>}
-      {error && <div className='text-red-500 uppercase text-lg tracking-wider'>{error}</div>}
-      {!completed ?
+      {(loading || (loading2 && completed)) && <div className='text-gtray-200 uppercase text-lg tracking-wider'>{(loading2 && completed) || loading}</div>}
+      {(error || (error2 && completed)) && <div className='text-red-500 uppercase text-lg tracking-wider'>{(completed && error2) || error}</div>}
+      {!completed ? 
         filteredSearch?.map(request => (
-          <UncompletedRequest 
+          <UncompletedRequest
             key={request._id} 
             request={request} 
             handleEdit={handleEdit}
@@ -117,7 +120,7 @@ export const Card = () => {
             setEditPage={setEditPage}
             handleCompleted={handleCompleted}
           />
-        ))
+        )) 
         :
         filteredSearch2?.map(request => (
           <CompletedRequest 
