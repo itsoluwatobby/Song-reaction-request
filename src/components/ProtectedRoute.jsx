@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
 export const ProtectedRoute = () => {
-  const isEmail = localStorage.getItem('email')
+  const email = localStorage.getItem('email')
   
-  return isEmail !== null ? <Outlet /> : <Navigate to='/' />
+  return email ? <Outlet /> : <Navigate to='/' />
 }

@@ -4,7 +4,7 @@ import { axiosRequest } from '../../app/axios'
 import { UseDataContext } from '../../context/UseDataContext'
 
 export const RequestForm = () => {
-  const {user, requestTitle, requestLink, setRequestTitle, setRequestLink,  request, setSearchItem, setRequest, setNewRequest} = UseDataContext()
+  const {user, requestTitle, completed, setCompleted, requestLink, setRequestTitle, setRequestLink,  request, setSearchItem, setRequest, setNewRequest} = UseDataContext()
   const [loading, setLoading] = useState(null)
   const [error, setError] = useState(null)
   const inputRef = useRef()
@@ -55,6 +55,7 @@ export const RequestForm = () => {
             required
             onChange={e => setRequestTitle(e.target.value)} 
             placeholder='Music Title'
+            onFocus={() => setError('')}
             className='bg-white flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
           />
         </div>
@@ -66,13 +67,22 @@ export const RequestForm = () => {
             value={requestLink}
             onChange={e => setRequestLink(e.target.value)} 
             placeholder='Song link (optional)'
+            onFocus={() => setError('')}
             className='bg-white flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
           />
         </div>
-        
-        <button type='submit' title='Submit Request' className='flex-none w-28 grid place-content-center p-2 rounded-full shadow-lg bg-blue-400 hover:bg-blue-500 active:bg-blue-400'>
-          <BsFillShareFill className='text-2xl text-white'/>
-        </button>
+        <div className='flex justify-between'>
+          <button type='submit' title='Submit Request' className='flex-none w-28 grid place-content-center p-2 rounded-full shadow-lg bg-blue-400 hover:bg-blue-500 active:bg-blue-400'>
+            <BsFillShareFill className='text-2xl text-white'/>
+          </button>
+          <button 
+            type='button' 
+            title='View Completed Requests' 
+            onClick={() => setCompleted(prev => !prev)}
+            className='flex-none grid max-w-32 place-content-center p-2 rounded-full shadow-lg bg-teal-400 hover:bg-teal-500 active:bg-teal-400'>
+            {completed ? 'Close' : 'View Completed'}
+          </button>
+        </div>
       </form>
     </div>
   )

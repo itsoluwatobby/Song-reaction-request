@@ -8,6 +8,7 @@ export const DataContextProvider = ({children}) => {
   const [user, setUser] = useState({})
   const [email, setEmail] = useState('')
   const [request, setRequest] = useState([])
+  const [completedRequest, setCompletedRequest] = useState([])
   const [newRequest, setNewRequest] = useState({})
   const [requestTitle, setRequestTitle] = useState('')
   const [requestLink, setRequestLink] = useState('')
@@ -16,6 +17,7 @@ export const DataContextProvider = ({children}) => {
   const [editLink, setEditLink] = useState('')
   const [search, setSearch] = useState('')
   const [editPage, setEditPage] = useState(false);
+  const [completed, setCompleted] = useState(false);
   const [searchItem, setSearchItem] = useState(false);
   const [reload, setReload] = useState(1);
   const [loading, setLoading] = useState(null)
@@ -33,7 +35,7 @@ export const DataContextProvider = ({children}) => {
       const res = await axiosRequest.post('/new', {
         email
       })
-      setUser(res.data)
+      setUser(res?.data)
       navigate('/song/request')
       localStorage.setItem('email', res?.data.email)
       setEmail('')
@@ -43,6 +45,11 @@ export const DataContextProvider = ({children}) => {
     }finally{
       setLoading(null)
     }
+  }
+
+  const logout = () => {
+    setUser({})
+    localStorage.removeItem('email')
   }
 
   const handleEdit = async(id) => {
@@ -77,7 +84,7 @@ export const DataContextProvider = ({children}) => {
   }
 
   const value = {
-    user, setUser, email, setEmail, handleEdit, handleSubmit, setLoading, setError, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch, loading, error
+    user, setUser, email, setEmail, handleEdit, handleSubmit, setLoading, setError, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch, loading, error, logout, completed, setCompleted, completedRequest, setCompletedRequest
   }
 
   return (
