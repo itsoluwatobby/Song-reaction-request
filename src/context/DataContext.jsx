@@ -56,6 +56,7 @@ export const DataContextProvider = ({children}) => {
   const logout = () => {
     setUser({})
     localStorage.removeItem('email')
+    navigate('/')
   }
 
   const handleEdit = async(id) => {

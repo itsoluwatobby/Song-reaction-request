@@ -20,7 +20,7 @@ export const Edit = () => {
     <article 
       onClick={() => setError1(null)}
       className='flex-none maxscreen:w-[35%] flex flex-col gap-3 h-full shadow-lg '>
-    <form onSubmit={submitEdit} className='relative flex-none flex flex-col gap-2 p-2 border rounded-lg bg-opacity-30 bg-blue-200'>
+    <form onSubmit={submitEdit} className='relative flex-none flex flex-col gap-2 p-2 border rounded-lg bg-opacity-20 bg-blue-400'>
           <h1 className='text-center text-2xl font-semibold'>Edit Your Request</h1>
           <FaTimesCircle 
             onClick={() => setEditPage(false)}
@@ -38,7 +38,7 @@ export const Edit = () => {
               autoComplete='off'
               onChange={e => setEditTitle(e.target.value)}  
               placeholder='Music Title'
-              className='bg-white flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
+              className='bg-gray-100 text-lg flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
             />
           </div>
           <div className='flex flex-col'>
@@ -50,7 +50,7 @@ export const Edit = () => {
               autoComplete='off'
               onChange={e => setEditLink(e.target.value)} 
               placeholder='Song link (optional)'
-              className='bg-white flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
+              className='bg-gray-100 text-lg flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
             />
           </div>
           

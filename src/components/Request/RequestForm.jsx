@@ -35,7 +35,7 @@ export const RequestForm = () => {
   
   return (
     <div className='flex-none maxscreen:w-[35%] midscreen:w-full flex flex-col gap-3 h-full shadow-lg relative'>
-      <form onSubmit={handleSubmit} className='flex-none flex flex-col gap-1 p-2 border rounded-lg bg-opacity-30 bg-blue-200'>
+      <form onSubmit={handleSubmit} className='flex-none flex flex-col gap-1 p-2 border rounded-lg bg-opacity-20 bg-blue-400'>
       <h1 className='text-center text-2xl font-semibold'>Make A Request</h1>
       {loading && <div className='text-gray-50 capitalize text-lg tracking-wider'>{loading}</div>}
       {error && <div className='text-gray-200 m-auto bg-red-600 rounded-full pl-2 pr-2 w-fit capitalize text-lg tracking-wider'>{error}</div>}
@@ -56,7 +56,7 @@ export const RequestForm = () => {
             onChange={e => setRequestTitle(e.target.value)} 
             placeholder='Music Title'
             onFocus={() => setError('')}
-            className='bg-white flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
+            className='bg-gray-100 text-lg flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
           />
         </div>
         <div className='flex flex-col'>
@@ -68,7 +68,7 @@ export const RequestForm = () => {
             onChange={e => setRequestLink(e.target.value)} 
             placeholder='Song link (optional)'
             onFocus={() => setError('')}
-            className='bg-white flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
+            className='bg-gray-100 text-lg flex-auto pl-2.5 pr-2.5 w-full p-2 rounded-full border-none focus:outline-none'
           />
         </div>
         <div className='flex justify-between'>

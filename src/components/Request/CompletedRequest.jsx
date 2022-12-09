@@ -14,7 +14,7 @@ export const CompletedRequest = (
     className='relative border-b-[2px] shadow-lg p-2 last:border-b-0'>
       <p className='flex items-center gap-8'>
         <span>
-          {request?.email}
+          {request?.email.split('@')[0]}
         </span>
         <span className='text-gray-300'>{format(request?.requestDate)}</span>
       </p>
@@ -33,7 +33,7 @@ export const CompletedRequest = (
       {request?.requestLink && 
       <p className='flex items-center gap-2'>
         <span>Link:</span>
-        <a href={request?.requestLink} target="_blank" className='text-green-500 underline hover:text-green-400'>{request?.requestLink}</a>
+        <a href={request?.requestLink} target="_blank" className='text-green-500 underline hover:text-green-400'>{request?.requestLink.slice(0,25)}...</a>
       </p>}
       <p className='cursor-pointer w-40 mt-2'>
         {

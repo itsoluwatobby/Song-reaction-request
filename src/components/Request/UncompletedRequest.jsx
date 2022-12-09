@@ -14,7 +14,7 @@ export const UncompletedRequest = (
       className='relative border-b-[2px] shadow-lg p-2 last:border-b-0'>
       <p className='flex items-center gap-8'>
         <span>
-          {request?.email}
+          {request?.email.split('@')[0]}
         </span>
         <span className='text-gray-300'>{format(request?.requestDate)}</span>
       </p>
@@ -33,14 +33,14 @@ export const UncompletedRequest = (
       {request?.requestLink && 
       <p className='flex items-center gap-2'>
         <span>Link:</span>
-        <a href={request?.requestLink} target="_blank" className='text-green-500 underline hover:text-green-400'>{request?.requestLink}</a>
+        <a href={request?.requestLink} target="_blank" className='text-green-500 underline hover:text-green-400'>{request?.requestLink.slice(0,22)}...</a>
       </p>}
       <p className='flex items-center gap-10 cursor-pointer w-full mt-2'>
         <div className='flex items-center gap-3'>
           <button 
             onClick={() => handleVotes(request?._id)}
             className={`flex hover:bg-blue-300 active:bg-blue-600 items-center gap-1 rounded-full p-1 ${request?.upVote.includes(user?._id) ? 'bg-blue-500' : 'bg-blue-400'}`}>
-            {!request?.upVote.includes(user._id) ? 'Unvote' : 'Upvote'}
+            {request?.upVote.includes(user._id) ? 'Unvote' : 'Upvote'}
             <ImArrowUp className={`text-[20px] ${request?.upVote.includes(user?._id) ? 'text-black' : 'text-white'}`}/>
           </button>
           <span className='text-[20px]'>{request?.upVote.length}</span>
