@@ -40,7 +40,7 @@ export const UncompletedRequest = (
           <button 
             onClick={() => handleVotes(request?._id)}
             className={`flex hover:bg-blue-300 active:bg-blue-600 items-center gap-1 rounded-full p-1 ${request?.upVote.includes(user?._id) ? 'bg-blue-500' : 'bg-blue-400'}`}>
-            Upvote
+            {!request?.upVote.includes(user._id) ? 'Unvote' : 'Upvote'}
             <ImArrowUp className={`text-[20px] ${request?.upVote.includes(user?._id) ? 'text-black' : 'text-white'}`}/>
           </button>
           <span className='text-[20px]'>{request?.upVote.length}</span>

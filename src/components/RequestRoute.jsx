@@ -19,14 +19,14 @@ export const RequestRoute = () => {
         isMounted && setUser(res?.data)
       }
       catch(error){
-        navigate('/', {state: {from}, replace: true} )
+        navigate({state: {from}, replace: true})
       }
     }
-    !user && getUser()
+    getUser()
 
     return () => isMounted = false
 
   }, [loggedInUser])
-  
+
   return <Outlet />
 }

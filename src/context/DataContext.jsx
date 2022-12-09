@@ -27,7 +27,7 @@ export const DataContextProvider = ({children}) => {
   const [error1, setError1] = useState(null)
 
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/'
+  //const from = location.state?.from?.pathname || '/'
 
   const navigate = useNavigate()
 
@@ -42,7 +42,7 @@ export const DataContextProvider = ({children}) => {
         emailAddress: email
       })
       setLoggedInUser(res?.data)
-      navigate('/song/request', {state: {from}, replace: true})
+      navigate('/song/request')
       localStorage.setItem('email', res?.data)
       setEmail('')
     }catch(error){

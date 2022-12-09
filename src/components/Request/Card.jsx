@@ -14,7 +14,7 @@ export const Card = () => {
     let isMounted = true
 
     const fetchRequests = async() => {
-      setLoading('Loading requests...')
+      //setLoading('Loading requests...')
       setError(null)
       try{
         const res = await axiosRequest.get('/')
