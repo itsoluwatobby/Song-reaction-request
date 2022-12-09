@@ -1,11 +1,12 @@
 import {createContext, useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { axiosRequest } from '../app/axios'
 
 export const DataContext = createContext({})
 
 export const DataContextProvider = ({children}) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('userRequest')) || {})
+  const [user, setUser] = useState({})
+  const [loggedInUser, setLoggedInUser] = useState('')
   const [email, setEmail] = useState('')
   const [request, setRequest] = useState([])
   const [completedRequest, setCompletedRequest] = useState([])
@@ -25,6 +26,9 @@ export const DataContextProvider = ({children}) => {
   const [loading1, setLoading1] = useState(null)
   const [error1, setError1] = useState(null)
 
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
+
   const navigate = useNavigate()
 
   const refetch = () => setReload(prev => prev + 1)
@@ -35,11 +39,11 @@ export const DataContextProvider = ({children}) => {
     setError(null)
     try{
       const res = await axiosRequest.post('/new', {
-        email
+        emailAddress: email
       })
-      setUser(res?.data)
-      navigate('/song/request')
-      localStorage.setItem('userRequest', JSON.stringify(res?.data))
+      setLoggedInUser(res?.data)
+      navigate('/song/request', {state: {from}, replace: true})
+      localStorage.setItem('email', res?.data)
       setEmail('')
     }catch(error){
     !error?.response && setError('No server response')
@@ -51,7 +55,7 @@ export const DataContextProvider = ({children}) => {
 
   const logout = () => {
     setUser({})
-    localStorage.removeItem('userRequest')
+    localStorage.removeItem('email')
   }
 
   const handleEdit = async(id) => {
@@ -87,7 +91,7 @@ export const DataContextProvider = ({children}) => {
   }
 
   const value = {
-    user, setUser, email, setEmail, handleEdit, handleSubmit, setLoading, setError, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch, loading, error, logout, completed, setCompleted, completedRequest, setCompletedRequest, setLoading1, setError1, loading1, error1 
+    user, setUser, email, setEmail, handleEdit, handleSubmit, setLoading, setError, request, setRequest, requestTitle, requestLink, editTitle, setEditTitle, editLink, setEditLink, setRequestTitle, setRequestLink, newRequest, setNewRequest, submitEdit, reload, refetch, editPage, setEditPage, searchItem, setSearchItem, search, setSearch, loading, error, logout, completed, setCompleted, completedRequest, setCompletedRequest, setLoading1, setError1, loading1, error1, loggedInUser
   }
 
   return (
