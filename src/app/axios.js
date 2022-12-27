@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export const axiosRequest = axios.create({
-  baseURL: 'http://localhost:4000/user',
+  baseURL: 'https://graciereacts-api.onrender.com/user',
   headers: { 'Content-Type': 'application/json' }
 })
