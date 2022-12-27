@@ -37,7 +37,7 @@ export const EmailForm = () => {
         </div>
         <button className='mt-2 w-[80%] p-1 bg-blue-200 box-border rounded-full cursor-pointer hover:bg-blue-300 active:bg-blue-200 transition duration-200 ease-in-out text-[20px]'>Submit</button>
       </form>
-      <p className='capitalize mt-4 p-2 text-center text-white bg-slate-500 bg-opacity-50 shadow-2xl font-[500] text-lg rounded-lg'>This is gracie reacts fans page. A space where you can always submit your song requests from me to react to.</p>
+      <p className='capitalize mt-4 p-2 text-center text-white bg-slate-500 bg-opacity-50 shadow-2xl font-[500] text-lg rounded-lg'>This is gracie reacts fans page. A space where you can always submit your song requests for me to react to.</p>
       <img src="https://i.ytimg.com/vi/uOf9PHk4vj8/hq720_2.jpg?sqp=-oaymwEdCI4CEOADSFXyq4qpAw8IARUAAIhCcAHAAQbQAQE=&rs=AOn4CLC_iUSdNuYQ9geGMoOsz8nqUg59eA" alt="gracie" 
         title='Gracie Reacts' className='border-8 rounded-full w-[360px] h-[300px] object-cover m-auto'
       />
